@@ -25,6 +25,9 @@ public class CustomMethodServlet extends HttpServlet {
             out.println("{\"method\": \"GET\", \"type\": \"standard\"}");
         } else if ("POST".equals(method)) {
             out.println("{\"method\": \"POST\", \"type\": \"standard\"}");
+        } else if ("OPTIONS".equals(method)) {
+            resp.setHeader("Allow", "GET, POST, OPTIONS, FUNKYTOWN, DANCEPARTY, SUPERDUPER");
+            out.println("{\"method\": \"OPTIONS\", \"type\": \"standard\", \"allowed\": [\"GET\", \"POST\", \"OPTIONS\", \"FUNKYTOWN\", \"DANCEPARTY\", \"SUPERDUPER\"]}");
         } 
         // Handle non-standard methods
         else if ("FUNKYTOWN".equalsIgnoreCase(method)) {

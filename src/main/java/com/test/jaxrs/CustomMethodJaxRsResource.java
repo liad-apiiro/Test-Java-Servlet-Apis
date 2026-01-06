@@ -51,5 +51,13 @@ public class CustomMethodJaxRsResource {
     public Response putData() {
         return Response.ok("{\"method\": \"PUT\", \"framework\": \"JAX-RS\"}").build();
     }
+    
+    @OPTIONS
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response optionsData() {
+        return Response.ok("{\"method\": \"OPTIONS\", \"framework\": \"JAX-RS\", \"allowed\": [\"GET\", \"POST\", \"PUT\", \"OPTIONS\", \"FUNKYTOWN\", \"DANCEPARTY\", \"SUPERDUPER\"]}")
+                .header("Allow", "GET, POST, PUT, OPTIONS, FUNKYTOWN, DANCEPARTY, SUPERDUPER")
+                .build();
+    }
 }
 

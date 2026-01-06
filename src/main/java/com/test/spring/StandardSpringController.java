@@ -35,5 +35,12 @@ public class StandardSpringController {
     public ResponseEntity<String> patchData(@RequestBody String body) {
         return ResponseEntity.ok("{\"method\": \"PATCH\", \"framework\": \"Spring MVC\", \"body\": " + body + "}");
     }
+    
+    @RequestMapping(method = RequestMethod.OPTIONS)
+    public ResponseEntity<String> optionsData() {
+        return ResponseEntity.ok()
+                .header("Allow", "GET, POST, PUT, DELETE, PATCH, OPTIONS")
+                .body("{\"method\": \"OPTIONS\", \"framework\": \"Spring MVC\", \"allowed\": [\"GET\", \"POST\", \"PUT\", \"DELETE\", \"PATCH\", \"OPTIONS\"]}");
+    }
 }
 

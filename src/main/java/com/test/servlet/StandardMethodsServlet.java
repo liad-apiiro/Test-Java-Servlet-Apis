@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * Standard HTTP methods servlet - implements GET, POST, PUT, DELETE
+ * Standard HTTP methods servlet - implements GET, POST, PUT, DELETE, OPTIONS
  */
 public class StandardMethodsServlet extends HttpServlet {
     
@@ -42,6 +42,15 @@ public class StandardMethodsServlet extends HttpServlet {
         resp.setContentType("application/json");
         PrintWriter out = resp.getWriter();
         out.println("{\"method\": \"DELETE\", \"message\": \"Standard DELETE request\"}");
+    }
+    
+    @Override
+    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) 
+            throws ServletException, IOException {
+        resp.setContentType("application/json");
+        resp.setHeader("Allow", "GET, POST, PUT, DELETE, OPTIONS");
+        PrintWriter out = resp.getWriter();
+        out.println("{\"method\": \"OPTIONS\", \"message\": \"Standard OPTIONS request\", \"allowed\": [\"GET\", \"POST\", \"PUT\", \"DELETE\", \"OPTIONS\"]}");
     }
 }
 

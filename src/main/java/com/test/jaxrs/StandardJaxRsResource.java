@@ -42,5 +42,13 @@ public class StandardJaxRsResource {
     public Response patchData(String body) {
         return Response.ok("{\"method\": \"PATCH\", \"framework\": \"JAX-RS\", \"body\": " + body + "}").build();
     }
+    
+    @OPTIONS
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response optionsData() {
+        return Response.ok("{\"method\": \"OPTIONS\", \"framework\": \"JAX-RS\", \"allowed\": [\"GET\", \"POST\", \"PUT\", \"DELETE\", \"PATCH\", \"OPTIONS\"]}")
+                .header("Allow", "GET, POST, PUT, DELETE, PATCH, OPTIONS")
+                .build();
+    }
 }
 

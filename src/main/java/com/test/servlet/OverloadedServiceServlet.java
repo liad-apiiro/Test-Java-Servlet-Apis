@@ -36,6 +36,10 @@ public class OverloadedServiceServlet extends HttpServlet {
             case "DELETE":
                 out.println("{\"method\": \"DELETE\", \"warning\": \"Using service() override\"}");
                 break;
+            case "OPTIONS":
+                resp.setHeader("Allow", "GET, POST, PUT, DELETE, OPTIONS");
+                out.println("{\"method\": \"OPTIONS\", \"warning\": \"Using service() override\", \"allowed\": [\"GET\", \"POST\", \"PUT\", \"DELETE\", \"OPTIONS\"]}");
+                break;
             default:
                 out.println("{\"method\": \"" + method + "\", \"warning\": \"Custom method via service() override\"}");
         }

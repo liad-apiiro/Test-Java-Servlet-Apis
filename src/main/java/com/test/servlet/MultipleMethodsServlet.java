@@ -43,6 +43,12 @@ public class MultipleMethodsServlet extends HttpServlet {
         handleRequest("PATCH", req, resp);
     }
     
+    @Override
+    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) 
+            throws ServletException, IOException {
+        handleRequest("OPTIONS", req, resp);
+    }
+    
     // BAD PRACTICE: All methods do the same thing
     private void handleRequest(String method, HttpServletRequest req, HttpServletResponse resp) 
             throws IOException {

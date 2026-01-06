@@ -53,5 +53,12 @@ public class CustomMethodSpringController {
     public ResponseEntity<String> multipleMethods(@RequestBody String body) {
         return ResponseEntity.ok("{\"method\": \"POST or PUT\", \"framework\": \"Spring MVC\", \"body\": " + body + "}");
     }
+    
+    @RequestMapping(method = RequestMethod.OPTIONS)
+    public ResponseEntity<String> optionsData() {
+        return ResponseEntity.ok()
+                .header("Allow", "GET, POST, PUT, OPTIONS, FUNKYTOWN, DANCEPARTY, SUPERDUPER")
+                .body("{\"method\": \"OPTIONS\", \"framework\": \"Spring MVC\", \"allowed\": [\"GET\", \"POST\", \"PUT\", \"OPTIONS\", \"FUNKYTOWN\", \"DANCEPARTY\", \"SUPERDUPER\"]}");
+    }
 }
 
