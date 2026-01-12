@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * Standard HTTP methods servlet - implements GET, POST, PUT, DELETE, OPTIONS
+ * Standard HTTP methods servlet - implements GET, POST, PUT, DELETE, PATCH, OPTIONS
  */
 public class StandardMethodsServlet extends HttpServlet {
     
@@ -43,14 +43,22 @@ public class StandardMethodsServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         out.println("{\"method\": \"DELETE\", \"message\": \"Standard DELETE request\"}");
     }
+
+    @Override
+    protected void doPatch(HttpServletRequest req, HttpServletResponse resp) 
+            throws ServletException, IOException {
+        resp.setContentType("application/json");
+        PrintWriter out = resp.getWriter();
+        out.println("{\"method\": \"PATCH\", \"message\": \"Standard PATCH request\"}");
+    }
     
     @Override
     protected void doOptions(HttpServletRequest req, HttpServletResponse resp) 
             throws ServletException, IOException {
         resp.setContentType("application/json");
-        resp.setHeader("Allow", "GET, POST, PUT, DELETE, OPTIONS");
+        resp.setHeader("Allow", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
         PrintWriter out = resp.getWriter();
-        out.println("{\"method\": \"OPTIONS\", \"message\": \"Standard OPTIONS request\", \"allowed\": [\"GET\", \"POST\", \"PUT\", \"DELETE\", \"OPTIONS\"]}");
+        out.println("{\"method\": \"OPTIONS\", \"message\": \"Standard OPTIONS request\", \"allowed\": [\"GET\", \"POST\", \"PUT\", \"DELETE\", \"PATCH\", \"OPTIONS\"]}");
     }
 }
 

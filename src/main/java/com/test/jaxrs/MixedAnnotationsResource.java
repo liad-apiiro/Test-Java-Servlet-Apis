@@ -33,10 +33,19 @@ public class MixedAnnotationsResource {
     @GET
     @PUT
     @DELETE
-    // BAD: Three different HTTP methods on same method
+    @PATCH
+    // BAD: Four different HTTP methods on same method
     @Produces(MediaType.APPLICATION_JSON)
     public Response multipleMethods() {
-        return Response.ok("{\"method\": \"GET, PUT, or DELETE\", \"warning\": \"Too many methods\"}").build();
+        return Response.ok("{\"method\": \"GET, PUT, DELETE, or PATCH\", \"warning\": \"Too many methods\"}").build();
+    }
+    
+    @OPTIONS
+    @GET
+    // BAD: OPTIONS and GET on same method
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response optionsAndGet() {
+        return Response.ok("{\"method\": \"OPTIONS or GET\", \"warning\": \"Conflicting methods\"}").build();
     }
     
     // BAD: Method without any HTTP method annotation

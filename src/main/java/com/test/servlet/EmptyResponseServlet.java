@@ -40,5 +40,19 @@ public class EmptyResponseServlet extends HttpServlet {
         resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
         resp.flushBuffer();
     }
+    
+    @Override
+    protected void doPatch(HttpServletRequest req, HttpServletResponse resp) 
+            throws ServletException, IOException {
+        // BAD: Method implemented but does nothing
+        // No response written
+    }
+    
+    @Override
+    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) 
+            throws ServletException, IOException {
+        // BAD: Sets Allow header but no response body
+        resp.setHeader("Allow", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+    }
 }
 

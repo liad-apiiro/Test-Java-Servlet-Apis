@@ -45,6 +45,22 @@ public class ProblematicJaxRsResource {
         return Response.ok("{\"method\": \"DELETE\", \"id\": \"" + id + "\"}").build();
     }
     
+    @PATCH
+    @Path("/{id}")
+    // BAD: Missing @Consumes and @Produces
+    public Response patchData(@PathParam("id") String id, String body) {
+        // BAD: No validation
+        return Response.ok("{\"method\": \"PATCH\", \"id\": \"" + id + "\", \"body\": \"" + body + "\"}").build();
+    }
+    
+    @OPTIONS
+    // BAD: Missing @Produces
+    public Response optionsData() {
+        return Response.ok("{\"method\": \"OPTIONS\", \"allowed\": [\"GET\", \"POST\", \"PUT\", \"DELETE\", \"PATCH\", \"OPTIONS\"]}")
+                .header("Allow", "GET, POST, PUT, DELETE, PATCH, OPTIONS")
+                .build();
+    }
+    
     // BAD: Method without HTTP method annotation - will cause issues
     @Path("/broken")
     public Response brokenMethod() {

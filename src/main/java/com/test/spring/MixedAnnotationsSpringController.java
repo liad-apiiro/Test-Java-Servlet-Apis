@@ -27,9 +27,17 @@ public class MixedAnnotationsSpringController {
     @GetMapping
     @PutMapping
     @DeleteMapping
-    // BAD: Three different HTTP methods on same method
+    @PatchMapping
+    // BAD: Four different HTTP methods on same method
     public ResponseEntity<String> multipleMethods() {
-        return ResponseEntity.ok("{\"method\": \"GET, PUT, or DELETE\", \"warning\": \"Too many methods\"}");
+        return ResponseEntity.ok("{\"method\": \"GET, PUT, DELETE, or PATCH\", \"warning\": \"Too many methods\"}");
+    }
+    
+    @RequestMapping(method = RequestMethod.OPTIONS)
+    @GetMapping
+    // BAD: OPTIONS and GET on same method
+    public ResponseEntity<String> optionsAndGet() {
+        return ResponseEntity.ok("{\"method\": \"OPTIONS or GET\", \"warning\": \"Conflicting methods\"}");
     }
     
     // BAD: Method without HTTP method annotation

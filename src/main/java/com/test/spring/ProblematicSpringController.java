@@ -41,6 +41,21 @@ public class ProblematicSpringController {
         return ResponseEntity.ok("{\"method\": \"DELETE\", \"id\": \"" + id + "\"}");
     }
     
+    @PatchMapping("/{id}")
+    // BAD: Missing @RequestBody, missing @PathVariable validation
+    public ResponseEntity<String> patchData(String id, String body) {
+        // BAD: Parameter order might be wrong, no validation
+        return ResponseEntity.ok("{\"method\": \"PATCH\", \"id\": \"" + id + "\", \"body\": \"" + body + "\"}");
+    }
+    
+    @RequestMapping(method = RequestMethod.OPTIONS)
+    // BAD: Missing proper response headers
+    public ResponseEntity<String> optionsData() {
+        return ResponseEntity.ok()
+                .header("Allow", "GET, POST, PUT, DELETE, PATCH, OPTIONS")
+                .body("{\"method\": \"OPTIONS\", \"allowed\": [\"GET\", \"POST\", \"PUT\", \"DELETE\", \"PATCH\", \"OPTIONS\"]}");
+    }
+    
     // BAD: Ambiguous mapping - multiple methods without clear distinction
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
     public ResponseEntity<String> ambiguousMapping() {
