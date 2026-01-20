@@ -26,8 +26,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(value="/cmdi-00/BenchmarkTest00307")
-public class BenchmarkTest00307 extends HttpServlet {
+@WebServlet(value="/cmdi-00/BenchmarkTest00575")
+public class BenchmarkTest00575 extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -41,17 +41,24 @@ public class BenchmarkTest00307 extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 	
 		String param = "";
-		java.util.Enumeration<String> headers = request.getHeaders("BenchmarkTest00307");
-		
-		if (headers != null && headers.hasMoreElements()) {
-			param = headers.nextElement(); // just grab first element
+		boolean flag = true;
+		java.util.Enumeration<String> names = request.getParameterNames();
+		while (names.hasMoreElements() && flag) {
+			String name = (String) names.nextElement();		    	
+			String[] values = request.getParameterValues(name);
+			if (values != null) {
+				for(int i=0;i<values.length && flag; i++){
+					String value = values[i];
+					if (value.equals("BenchmarkTest00575")) {
+						param = name;
+					    flag = false;
+					}
+				}
+			}
 		}
 		
-		// URL Decode the header value since req.getHeaders() doesn't. Unlike req.getParameters().
-		param = java.net.URLDecoder.decode(param, "UTF-8");
 		
-		
-		String bar = "alsosafe";
+		String bar = "";
 		if (param != null) {
 			java.util.List<String> valuesList = new java.util.ArrayList<String>( );
 			valuesList.add("safe");
@@ -60,7 +67,7 @@ public class BenchmarkTest00307 extends HttpServlet {
 			
 			valuesList.remove(0); // remove the 1st safe value
 			
-			bar = valuesList.get(1); // get the last 'safe' value
+			bar = valuesList.get(0); // get the param value
 		}
 		
 		
@@ -74,14 +81,14 @@ public class BenchmarkTest00307 extends HttpServlet {
 		Runtime r = Runtime.getRuntime();
 
 		try {
-			Process p = r.exec(cmd + bar, argsEnv);
+			Process p = r.exec(cmd + bar, argsEnv, new java.io.File(System.getProperty("user.dir")));
 			org.owasp.benchmark.helpers.Utils.printOSCommandResults(p, response);
 		} catch (IOException e) {
 			System.out.println("Problem executing cmdi - TestCase");
-			response.getWriter().println(
-			  org.owasp.esapi.ESAPI.encoder().encodeForHTML(e.getMessage())
-			);
-			return;
+	        response.getWriter().println(
+	          org.owasp.esapi.ESAPI.encoder().encodeForHTML(e.getMessage())
+	        );
+	        return;
 		}
 	}
 	
